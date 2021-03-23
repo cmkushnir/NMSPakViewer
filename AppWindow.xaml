@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local_controls="clr-namespace:NMS.Controls"
     mc:Ignorable="d"
-	Title="NMS : PAK Viewer" Height="800" Width="1000"
+	Title="NMS : PAK Viewer" Height="800" Width="1000" Icon="Logo.ico"
 >
 	<DockPanel>
 		<ToolBar DockPanel.Dock="Top">
