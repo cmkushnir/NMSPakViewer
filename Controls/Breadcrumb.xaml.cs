@@ -62,6 +62,8 @@ namespace NMS.Controls
 			}
 		}
 
+		//...........................................................
+
 		public IPathNode ItemsSource {
 			get {
 				return m_items_source;
@@ -78,6 +80,8 @@ namespace NMS.Controls
 			}
 		}
 
+		//...........................................................
+
 		public IPathNode Selected {
 			get {
 				var    last = Panel.Children[Panel.Children.Count - 1] as ComboBox;
@@ -88,7 +92,7 @@ namespace NMS.Controls
 
 				var nodes = value?.PathNodes;
 				if( nodes.IsNullOrEmpty() ) {
-					Root.SelectedIndex = -1;
+					Root.SelectedIndex = -1;  // triggers Combobox_SelectionChanged
 					return;
 				}
 
@@ -107,18 +111,16 @@ namespace NMS.Controls
 		protected void Combobox_SelectionChanged ( object SENDER, SelectionChangedEventArgs ARGS )
 		{
 			var sender = SENDER as ComboBox;
-			if( sender == null ) return;
-
-			var index = (int)sender.Tag;
+			var index  = (int)sender.Tag;
 
 			while( Panel.Children.Count > index ) {
 				Panel.Children.RemoveAt(Panel.Children.Count - 1);
 			}
+
 			var selected = sender.SelectedItem as IPathNode;
-			if( selected == null || selected.Items == null ) {
-				SelectionChanged.Invoke(this, selected);
-				return;
-			}
+			SelectionChanged.Invoke(this, selected);
+
+			if( selected?.Items == null ) return;
 
 			var next = new ComboBox {
 				ItemsSource       = selected.Items,
