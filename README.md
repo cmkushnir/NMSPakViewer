@@ -14,14 +14,14 @@ The found|selected game folder is saved to|loaded from:</br>
 HKEY_CURRENT_USER\SOFTWARE\HelloGames\NoMansSky\InstallDir</br>
 If InstallDir is invalid the app will re-find|prompt to select the game folder on next start.
 
-You can select a specific .pak file, or view the merged file tree.
-
-A breadcrumb control is used to select a specific entry in the current file tree.
+Toolbar:
+- Combobox that lists all mod and game .pak files. Select a specific .pak file to have the breadcrumb control use its file tree, or none to use the merged file tree.
+- Breadcrumb control to select a specific entry in the current file tree.
 When a file is selected its contents are extracted (in-memory) from its parent .pak file, converted as needed, and the appropriate viewer control used to display the data.
-
-The toolbar Copy button copies the current path to the clipboard e.g. for pasting into an AMUMSS .lua script.</br>
-The toolbar Save button will open the Save File dialog to save the entry to disk; the path is not saved.</br>
+- Copy button copies the current path to the clipboard e.g. for pasting into an AMUMSS .lua script.</br>
+- Save button will open the Save File dialog to save the entry to disk; the path is not saved.</br>
 MBIN entries can be saved as either .mbin or .exml files (use the Save as Type combobox in the Save File dialog).
+- About button opens the default browser to the GitHub project page.
 
 <h2>.PAK Entry Types:</h2>
 
@@ -46,7 +46,7 @@ SharpZipLib decompress .pak file entries.
 
 https://github.com/icsharpcode/AvalonEdit</br>
 AvalonEdit views entries that can be converted to text.</br>
-Use Ctrl-F to open search control in top-right corner of editor.
+Use Ctrl-F to open the search panel in top-right corner of editor.
 
 https://github.com/monkeyman192/MBINCompiler</br>
 libMBIN decompiles .mbin entries and optionally save as .exml files.
