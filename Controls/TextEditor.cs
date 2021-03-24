@@ -44,6 +44,8 @@ namespace NMS
 			new System.Windows.Media.FontFamily("Consolas")
 		;
 
+		protected avalon.Search.SearchPanel m_panel;
+
 		//...........................................................
 
 		public TextEditor ()
@@ -54,7 +56,8 @@ namespace NMS
 
 			IsReadOnly = true;  // all derived are viewers, none allow edit
 
-			avalon.Search.SearchPanel.Install(TextArea);
+			m_panel = avalon.Search.SearchPanel.Install(TextArea);
+			Loaded += TextEditor_Loaded;
 
 			Background = SystemColors.ControlLightBrush;
 			FontFamily = s_font;
@@ -63,6 +66,14 @@ namespace NMS
 			Options.EnableHyperlinks = true;
 			Options.WordWrapIndentation = 4;
 			Options.InheritWordWrapIndentation = true;
+		}
+
+		//...........................................................
+
+		protected void TextEditor_Loaded ( object SENDER, RoutedEventArgs ARGS )
+		{
+			m_panel.Open();
+			m_panel.Reactivate();
 		}
 	}
 }
