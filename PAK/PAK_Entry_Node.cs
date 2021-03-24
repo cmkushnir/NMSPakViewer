@@ -37,7 +37,7 @@ namespace NMS.PAK.Entry
 			string PATH   = "",
 			Info   ENTRY  = null
 		)
-		:	base(PARENT, PATH, ENTRY)
+		:	base ( PARENT, PATH, ENTRY )
 		{
 		}
 	}

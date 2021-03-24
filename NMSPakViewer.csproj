@@ -68,17 +68,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SelectFolderDialog.xaml.cs">
+      <DependentUpon>SelectFolderDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextEditor.cs" />
     <Compile Include="Controls\Viewers\PAK_DDS_Viewer.cs" />
     <Compile Include="Controls\Viewers\PAK_JSON_Viewer.cs" />
     <Compile Include="Controls\Viewers\PAK_LUA_Viewer.cs" />
     <Compile Include="Controls\Viewers\PAK_SPV_Viewer.cs" />
+    <Compile Include="Controls\Viewers\PAK_CSV_Viewer.cs" />
     <Compile Include="Controls\Viewers\PAK_XML_Viewer.cs" />
     <Compile Include="IPathNode.cs" />
     <Compile Include="PAK\Types\PAK_DDS_Data.cs" />
     <Compile Include="PAK\Types\PAK_JSON_Data.cs" />
     <Compile Include="PAK\Types\PAK_LUA_Data.cs" />
     <Compile Include="PAK\Types\PAK_SPV_Data.cs" />
+    <Compile Include="PAK\Types\PAK_CSV_Data.cs" />
     <Compile Include="PAK\Types\PAK_XML_Data.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Controls\Viewers\PAK_MBIN_Viewer.cs" />
@@ -109,6 +114,10 @@
       <DependentUpon>AppWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Controls\SelectFolderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -132,6 +141,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".editorconfig" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

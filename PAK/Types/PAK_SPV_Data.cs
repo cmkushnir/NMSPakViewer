@@ -38,7 +38,7 @@ namespace NMS.PAK.SPV
 		//...........................................................
 
 		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		: base(INFO, RAW)
+		:	base ( INFO, RAW )
 		{
 			// todo: get a c# wrapper around something like spirv-cross.exe
 			// m_text = convert Raw to decompiled spv

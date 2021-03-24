@@ -39,7 +39,7 @@ namespace NMS.PAK.LUA
 		//...........................................................
 
 		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		: base(INFO, RAW)
+		:	base ( INFO, RAW )
 		{
 			if( Raw == null ) return;
 

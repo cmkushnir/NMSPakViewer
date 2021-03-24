@@ -40,7 +40,7 @@ namespace NMS.PAK.MBIN
 		//...........................................................
 
 		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		: base(INFO, RAW)
+		:	base ( INFO, RAW )
 		{
 		}
 

@@ -40,11 +40,13 @@ namespace NMS.Controls
 		//...........................................................
 
 		public Breadcrumb ()
+		:	base ()
 		{
 			InitializeComponent();
+			Root.Tag               = 1;  // 1-based index
 			Root.IsEditable        = false;
 			Root.IsReadOnly        = true;
-			Root.Tag               = 1;  // 1-based index
+			Root.Padding           = new System.Windows.Thickness(4, 0, 4, 0);
 			Root.SelectionChanged += Combobox_SelectionChanged;
 		}
 
@@ -82,10 +84,26 @@ namespace NMS.Controls
 
 		//...........................................................
 
+		protected IPathNode SelectedChild ( int INDEX )
+		{
+			if( INDEX < 0 || INDEX >= Panel.Children.Count ) return null;
+			var child = Panel.Children[INDEX] as ComboBox;
+			return child.SelectedItem as IPathNode;
+		}
+
+		//...........................................................
+
 		public IPathNode Selected {
 			get {
-				var    last = Panel.Children[Panel.Children.Count - 1] as ComboBox;
-				return last.SelectedItem as IPathNode;
+				// if last child has a selected item then
+				// Combobox_SelectionChanged determined there was no more path parts.
+				// if last child has no selected item then
+				// Combobox_SelectionChanged has populated it with the next path part options.
+				var node  = SelectedChild(Panel.Children.Count - 1);  // file
+				if( node == null ) {
+					node  = SelectedChild(Panel.Children.Count - 2);  // dir
+				}
+				return node;
 			}
 			set {
 				if( Selected == value ) return;
@@ -128,7 +146,8 @@ namespace NMS.Controls
 				IsEditable        = false,
 				IsReadOnly        = true,
 				SelectedIndex     = -1,
-				MaxDropDownHeight = Root.MaxDropDownHeight
+				MaxDropDownHeight = Root.MaxDropDownHeight,
+				Padding           = new System.Windows.Thickness(4, 0, 4, 0)
 			};
 			next.SelectionChanged += Combobox_SelectionChanged;
 			Panel.Children.Add(next);

@@ -55,9 +55,10 @@ namespace NMS.PAK.Entry
 
 			switch( INFO.Extension ) {
 				case ".TXT":  return new TXT .Data(INFO, raw);
-				case ".LUA":  return new LUA .Data(INFO, raw);
+				case ".CSV":  return new CSV .Data(INFO, raw);
 				case ".JSON": return new JSON.Data(INFO, raw);
 				case ".XML":  return new XML .Data(INFO, raw);
+				case ".LUA":  return new LUA .Data(INFO, raw);
 				case ".MBIN": return new MBIN.Data(INFO, raw);
 				case ".SPV":  return new SPV .Data(INFO, raw);
 				case ".DDS":  return new DDS .Data(INFO, raw);

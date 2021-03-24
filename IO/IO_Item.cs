@@ -101,7 +101,7 @@ namespace NMS.IO
 		//...........................................................
 
 		public File ( string PATH )
-		: base(PATH)
+		:	base ( PATH )
 		{
 		}
 
@@ -149,7 +149,7 @@ namespace NMS.IO
 	public class Directory : Item
 	{
 		public Directory ( string PATH )
-		: base(PATH)
+		:	base ( PATH )
 		{
 		}
 

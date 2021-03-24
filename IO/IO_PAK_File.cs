@@ -68,7 +68,7 @@ namespace NMS.PAK
 		/// </summary>
 		/// <param name="PATH">Full path to .pak file on disk.</param>
 		public File ( string PATH )
-		: base(PATH)
+		:	base ( PATH )
 		{
 		}
 

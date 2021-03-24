@@ -38,7 +38,7 @@ namespace NMS.PAK.DDS
 		//...........................................................
 
 		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		: base(INFO, RAW)
+		:	base ( INFO, RAW )
 		{
 			if( Raw == null ) return;
 			var config = new Pfim.PfimConfig();

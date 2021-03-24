@@ -30,7 +30,7 @@ using System.Windows;
 
 //=============================================================================
 
-namespace NMS.PAK.XML
+namespace NMS.PAK.CSV
 {
 	public class Data : NMS.PAK.Entry.Data
 	{

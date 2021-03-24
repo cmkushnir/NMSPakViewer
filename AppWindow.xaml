@@ -6,14 +6,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local_controls="clr-namespace:NMS.Controls"
     mc:Ignorable="d"
-	Title="NMS : PAK Viewer" Height="800" Width="1000" Icon="Logo.ico"
+	Title="NMS : PAK Viewer" Icon="Logo.ico"
+	WindowStartupLocation="CenterScreen"
+	Height="1000" Width="1000" 
 >
 	<DockPanel>
-		<ToolBar DockPanel.Dock="Top">
-			<ComboBox Name="PakCombobox" IsEditable="False" IsReadOnly="True" Padding="2,0" />
-			<local_controls:Breadcrumb x:Name="EntryBreadcrumb" />
-			<Button x:Name="Save" Content="Save..." Margin="4,0" IsEnabled="False" />
-		</ToolBar>
+		<DockPanel DockPanel.Dock="Top">
+			<DockPanel.Resources>
+				<ResourceDictionary>
+					<Style TargetType="{x:Type Button}"   BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"></Style>
+					<Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}"></Style>
+				</ResourceDictionary>
+			</DockPanel.Resources>
+			<ComboBox Name="PakCombobox" IsEditable="False" IsReadOnly="True" Padding="4,0" ToolTip="Select .pak file, or none to browse all game .pak entries" />
+			<local_controls:Breadcrumb x:Name="EntryBreadcrumb"                             ToolTip="Select entry" />
+			<Button x:Name="Copy"  Content="Copy"  Margin="4,0"                             ToolTip="Copy path to clipboard" />
+			<Button x:Name="Save"  Content="Save"  Margin="4,0" IsEnabled="False"           ToolTip="Save entry to disk"/>
+			<Button x:Name="About" Content="About" Margin="4,0" HorizontalAlignment="Right" ToolTip="Open GitHub project page" />
+		</DockPanel>
 		<Grid x:Name="Viewer"
 			Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
 		/>
