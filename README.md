@@ -15,9 +15,9 @@ HKEY_CURRENT_USER\SOFTWARE\HelloGames\NoMansSky\InstallDir</br>
 If InstallDir is invalid the app will re-find|prompt to select the game folder on next start.
 
 Toolbar:
-- Combobox that lists all mod and game .pak files. Select a specific .pak file to have the breadcrumb control use its file tree, or none to use the merged file tree.
+- Combobox lists all mod and game .pak files. Select a specific .pak file to have the breadcrumb control use its file tree, or none to use the merged file tree.
 - Breadcrumb control to select a specific entry in the current file tree.
-When a file is selected its contents are extracted (in-memory) from its parent .pak file, converted as needed, and the appropriate viewer control used to display the data.
+When an entry is selected its contents are extracted (in-memory) from its parent .pak file, converted as needed, and the appropriate viewer control used to display the data.
 - Copy button copies the current path to the clipboard e.g. for pasting into an AMUMSS .lua script.</br>
 - Save button will open the Save File dialog to save the entry to disk; the path is not saved.</br>
 MBIN entries can be saved as either .mbin or .exml files (use the Save as Type combobox in the Save File dialog).
