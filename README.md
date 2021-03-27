@@ -23,9 +23,9 @@ When an item is selected its contents are extracted (in-memory) from its parent 
 MBIN items can be saved as either .mbin or .exml files (use the Save as Type combobox in the Save File dialog).
 - GitHub button opens the default browser to the GitHub project page.
 
-Folding support is available for items that can be viewed as xml data.
-If a mod .pak file is selected then any items that replace a game item will be shown in a diff viewer, if one is available for the item type.
-Folding is disabled when viewing an xml diff, as there is no easy way to sync foldings between viewers.
+Folding support is available for items that can be viewed as xml data.</br>
+If a mod .pak file is selected then any items that replace a game item will be shown in a diff viewer, if one is available for the item type.</br>
+Folding is disabled when viewing an xml diff, as there is no easy way to sync foldings between viewers.</br>
 
 <h2>.PAK Entry Types:</h2>
 
