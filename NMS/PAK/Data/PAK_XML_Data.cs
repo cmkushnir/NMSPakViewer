@@ -24,56 +24,45 @@ SOFTWARE.
 */
 //=============================================================================
 
+using System.IO;
+using System.Text;
 using System.Windows;
-using avalon = ICSharpCode.AvalonEdit;
 
 //=============================================================================
 
-namespace NMS
+namespace cmk.NMS.PAK.XML
 {
-	public partial class TextEditor : avalon.TextEditor
+	public class Data : cmk.NMS.PAK.Item.Data
 	{
-		static TextEditor ()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(
-				typeof(TextEditor), new FrameworkPropertyMetadata(typeof(TextEditor))
-			);
-		}
-
-		protected static System.Windows.Media.FontFamily s_font =
-			new System.Windows.Media.FontFamily("Consolas")
-		;
-
-		protected avalon.Search.SearchPanel m_panel;
+		protected string m_text;
 
 		//...........................................................
 
-		public TextEditor ()
-		:	base ()
+		public Data ( cmk.NMS.PAK.Item.Info INFO, Stream RAW )
+		:	base ( INFO, RAW )
 		{
-			HorizontalAlignment = HorizontalAlignment.Stretch;
-			VerticalAlignment   = VerticalAlignment.Stretch;
+			if( Raw == null ) return;
 
-			IsReadOnly = true;  // all derived are viewers, none allow edit
+			var reader = new StreamReader(Raw, Encoding.UTF8);
+			m_text     = reader.ReadToEnd();
 
-			m_panel = avalon.Search.SearchPanel.Install(TextArea);
-			Loaded += TextEditor_Loaded;
-
-			Background = SystemColors.ControlLightBrush;
-			FontFamily = s_font;
-			FontSize   = 14;
-			ShowLineNumbers = true;
-			Options.EnableHyperlinks = true;
-			Options.WordWrapIndentation = 4;
-			Options.InheritWordWrapIndentation = true;
+			if( m_text == null ) m_text = "";
 		}
 
 		//...........................................................
 
-		protected void TextEditor_Loaded ( object SENDER, RoutedEventArgs ARGS )
-		{
-			m_panel.Open();
-			m_panel.Reactivate();
+		protected override UIElement ViewerControl_ {
+			get {
+				var game_data  = GameData as Data;
+				if( game_data != null ) return new Differ(game_data.Text, Text);
+				else                    return new Viewer{Text = Text};
+			}
+		}
+
+		//...........................................................
+
+		public string Text {
+			get { return m_text; }
 		}
 	}
 }

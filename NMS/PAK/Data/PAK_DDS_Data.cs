@@ -24,69 +24,41 @@ SOFTWARE.
 */
 //=============================================================================
 
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 //=============================================================================
 
-namespace NMS.PAK.DDS
+namespace cmk.NMS.PAK.DDS
 {
-	public partial class Viewer : Image
+	public class Data : cmk.NMS.PAK.Item.Data
 	{
-		static Viewer ()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(
-				typeof(Viewer), new FrameworkPropertyMetadata(typeof(Viewer))
-			);
-		}
-
-		protected NMS.PAK.DDS.Data m_data;
+		protected Pfim.IImage m_image;
 
 		//...........................................................
 
-		public Viewer ()
-		:	base ()
+		public Data ( cmk.NMS.PAK.Item.Info INFO, Stream RAW )
+		:	base ( INFO, RAW )
 		{
-			HorizontalAlignment = HorizontalAlignment.Stretch;
-			VerticalAlignment   = VerticalAlignment.Stretch;
+			if( Raw == null ) return;
+			var config = new Pfim.PfimConfig();
+			m_image    = Pfim.Pfim.FromStream(Raw, config);
 		}
 
 		//...........................................................
 
-		protected static PixelFormat PixelFormat ( Pfim.IImage IMAGE )
-		{
-			switch( IMAGE.Format ) {
-				case Pfim.ImageFormat.Rgb8:   return PixelFormats.Gray8;
-				case Pfim.ImageFormat.Rgb24:  return PixelFormats.Bgr24;
-				case Pfim.ImageFormat.Rgba32: return PixelFormats.Bgra32;
-				case Pfim.ImageFormat.R5g5b5:
-				case Pfim.ImageFormat.R5g5b5a1: return PixelFormats.Bgr555;
-				case Pfim.ImageFormat.R5g6b5:   return PixelFormats.Bgr565;
-			}
-			return PixelFormats.Default;
-		}
-
-		//...........................................................
-
-		public Data ViewerData {
+		protected override UIElement ViewerControl_ {
 			get {
-				return m_data;
+				var game_data  = GameData as Data;
+				if( game_data != null ) return new Differ(game_data, this);
+				else                    return new Viewer{ViewerData = this};
 			}
-			set {
-				if( value == m_data ) return;
-				m_data = value;
+		}
 
-				var image  = m_data?.Image;
-				if( image == null ) return;
+		//...........................................................
 
-				Source = BitmapSource.Create(
-					image.Width, image.Height, 96.0, 96.0,
-					PixelFormat(image), null, image.Data,
-					image.Stride
-				);
-			}
+		public Pfim.IImage Image {
+			get { return m_image; }
 		}
 	}
 }

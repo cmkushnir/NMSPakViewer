@@ -24,21 +24,60 @@ SOFTWARE.
 */
 //=============================================================================
 
-
+using System.Windows;
+using System.Windows.Media;
+using avalon = ICSharpCode.AvalonEdit;
 
 //=============================================================================
 
-namespace NMS.PAK.Entry
+namespace cmk.Controls
 {
-	public class Node : PathNode<Info, Node>
+	public partial class TextViewer : avalon.TextEditor
 	{
-		public Node (
-			Node   PARENT = null,
-			string PATH   = "",
-			Info   ENTRY  = null
-		)
-		:	base ( PARENT, PATH, ENTRY )
+		static TextViewer ()
 		{
+			DefaultStyleKeyProperty.OverrideMetadata(
+				typeof(TextViewer), new FrameworkPropertyMetadata(typeof(TextViewer))
+			);
+		}
+
+		protected static System.Windows.Media.FontFamily s_font =
+			new System.Windows.Media.FontFamily("Consolas")
+		;
+
+		protected avalon.Search.SearchPanel m_search;
+
+		//...........................................................
+
+		public TextViewer ()
+		:	base ()
+		{
+			IsReadOnly = true;
+
+			HorizontalAlignment = HorizontalAlignment.Stretch;
+			VerticalAlignment   = VerticalAlignment  .Stretch;
+
+			m_search = avalon.Search.SearchPanel.Install(TextArea);
+			m_search.MarkerBrush = Brushes.Yellow;
+
+			Background      = SystemColors.ControlLightBrush;
+			FontFamily      = s_font;
+			FontSize        = 14;
+			ShowLineNumbers = true;
+
+			Options.EnableHyperlinks           = true;
+			Options.WordWrapIndentation        = 4;
+			Options.InheritWordWrapIndentation = true;
+
+			Loaded += OnLoaded;
+		}
+
+		//...........................................................
+
+		protected virtual void OnLoaded ( object SENDER, RoutedEventArgs ARGS )
+		{
+			m_search.Open();
+			m_search.Reactivate();
 		}
 	}
 }

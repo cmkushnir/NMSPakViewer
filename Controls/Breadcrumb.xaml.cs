@@ -28,9 +28,9 @@ using System.Windows.Controls;
 
 //=============================================================================
 
-namespace NMS.Controls
+namespace cmk.Controls
 {
-	public partial class Breadcrumb : UserControl
+	public partial class Breadcrumb : System.Windows.Controls.UserControl
 	{
 		protected IPathNode m_items_source;
 

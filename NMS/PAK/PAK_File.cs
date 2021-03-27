@@ -31,13 +31,13 @@ using zlib = ICSharpCode.SharpZipLib.Zip.Compression;
 
 //=============================================================================
 
-namespace NMS.PAK
+namespace cmk.NMS.PAK
 {
 	/// <summary>
 	/// Note: all values are big-endian.
 	/// See: 'https://www.psdevwiki.com/ps3/PlayStation_archive_(PSARC)'
 	/// </summary>
-	public class File : NMS.IO.File
+	public class File : cmk.IO.File
 	{
 		protected static readonly int s_cmp_type_zlib = 0x7a6c6962;  // ['z', 'l', 'i', 'b'] big-endian
 		protected static readonly int s_cmp_type_lzma = 0x6c7a6d61;  // ['l', 'z', 'm', 'a'] big-endian
@@ -54,8 +54,8 @@ namespace NMS.PAK
 		// we need the list because there are 2 parts to parse when reading a .pak file
 		// the toc header which gives everything except the names of the files,
 		// then later get get the names.  we need the names to build the tree.
-		protected List<PAK.Entry.Info> m_entries;  // list of EntryInfo meta-data
-		protected      PAK.Entry.Node  m_root;     // tree of EntryInfo meta-data
+		protected List<cmk.NMS.PAK.Item.Info> m_entries;  // list of EntryInfo meta-data
+		protected      cmk.NMS.PAK.Item.Node  m_root;     // tree of EntryInfo meta-data
 
 		// LoadBlocks
 		protected int     m_block_count = 0;  // m_blocks[m_block_count]
@@ -78,7 +78,7 @@ namespace NMS.PAK
 		/// Get an uncompressed blob from PAK_STREAM using the meta-data in ENTRY.
 		/// </summary>
 		/// <returns>A MemoryStream if possible, otherwise a FileStream to a auto-delete temp file.</returns>
-		protected Stream Decompress ( Stream PAK_STREAM, PAK.Entry.Info ENTRY )
+		protected Stream Decompress ( Stream PAK_STREAM, cmk.NMS.PAK.Item.Info ENTRY )
 		{
 			if( PAK_STREAM == null ) return null;
 
@@ -252,7 +252,7 @@ namespace NMS.PAK
 
 			const ulong mask_40bits = 0x000000ffffffffff;
 
-			m_entries = new List<PAK.Entry.Info>(m_toc_entries);
+			m_entries = new List<cmk.NMS.PAK.Item.Info>(m_toc_entries);
 
 			for( int entry = 0, offset = 0; entry < m_toc_entries; ++entry, offset += m_toc_entry_size ) {
 				var entry_offset = offset + (m_toc_entry_size - (4 + 5 + 5));  // skip (md5) hash
@@ -269,7 +269,7 @@ namespace NMS.PAK
 				item_length &= mask_40bits;  // we read 8 bytes but only want least-sig 5
 				item_offset &= mask_40bits;  // we read 8 bytes but only want least-sig 5
 
-				m_entries.Add( new PAK.Entry.Info(this,
+				m_entries.Add( new cmk.NMS.PAK.Item.Info(this,
 					entry, item_index, (long)item_offset, (long)item_length
 				));
 			}
@@ -377,7 +377,7 @@ namespace NMS.PAK
 			if( m_root    != null ) return true;
 			if( m_entries == null ) return false;
 
-			m_root = new PAK.Entry.Node();
+			m_root = new cmk.NMS.PAK.Item.Node();
 
 			for( int entry = 1; entry < m_entries.Count; ++entry ) {
 				m_root.Insert(m_entries[entry].Path, m_entries[entry]);  // add tree node
@@ -410,7 +410,7 @@ namespace NMS.PAK
 		/// <summary>
 		/// Load-on-demand a list of meta-data for the contained items.
 		/// </summary>
-		public List<PAK.Entry.Info> EntryList {
+		public List<cmk.NMS.PAK.Item.Info> EntryList {
 			get {
 				if( m_entries == null ) Load();
 				return m_entries;
@@ -422,7 +422,7 @@ namespace NMS.PAK
 		/// <summary>
 		/// Load-on-demand a tree of meta-data for the contained items.
 		/// </summary>
-		public PAK.Entry.Node EntryTree {
+		public cmk.NMS.PAK.Item.Node EntryTree {
 			get {
 				if( m_root == null ) Load();
 				return m_root;
@@ -436,7 +436,7 @@ namespace NMS.PAK
 		/// </summary>
 		/// <param name="ENTRY">Meta-data describing contained entry to extract.</param>
 		/// <returns>Wraper around MemoryStrem if possible, else delete-on-close FileStream.</returns>
-		public Stream Extract ( PAK.Entry.Info ENTRY )
+		public Stream Extract ( cmk.NMS.PAK.Item.Info ENTRY )
 		{
 			return Path.IsNullOrEmpty() || ENTRY?.File != this ? null :
 				Decompress(System.IO.File.OpenRead(Path), ENTRY)

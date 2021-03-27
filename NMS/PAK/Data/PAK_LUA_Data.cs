@@ -24,17 +24,45 @@ SOFTWARE.
 */
 //=============================================================================
 
-
+using System.IO;
+using System.Text;
+using System.Windows;
 
 //=============================================================================
 
-namespace NMS.PAK.CSV
+namespace cmk.NMS.PAK.LUA
 {
-	public partial class Viewer : TextEditor
+	public class Data : cmk.NMS.PAK.Item.Data
 	{
-		public Viewer ()
-		:	base ()
+		protected string m_text;
+
+		//...........................................................
+
+		public Data ( cmk.NMS.PAK.Item.Info INFO, Stream RAW )
+		:	base ( INFO, RAW )
 		{
+			if( Raw == null ) return;
+
+			var reader = new StreamReader(Raw, Encoding.UTF8);
+			m_text     = reader.ReadToEnd();
+
+			if( m_text == null ) m_text = "";
+		}
+
+		//...........................................................
+
+		protected override UIElement ViewerControl_ {
+			get {
+				var game_data  = GameData as Data;
+				if( game_data != null ) return new Differ(game_data.Text, Text);
+				else                    return new Viewer{Text = Text};
+			}
+		}
+
+		//...........................................................
+
+		public string Text {
+			get { return m_text; }
 		}
 	}
 }

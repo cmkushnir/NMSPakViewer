@@ -8,10 +8,10 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle( "NMSPakViewer" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription("No Man's Sky PAK Viewer")]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
-[assembly: AssemblyProduct( "NMSS" )]
+[assembly: AssemblyProduct("NMSPakViewer")]
 [assembly: AssemblyCopyright("Copyright © 2021 Chris Kushnir")]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]

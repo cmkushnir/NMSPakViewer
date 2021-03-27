@@ -26,10 +26,11 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 //=============================================================================
 
-namespace NMS.IO
+namespace cmk.IO
 {
 	public class Item : IComparable<Item>
 	{
@@ -94,9 +95,58 @@ namespace NMS.IO
 
 	//=========================================================================
 
-	public class File : Item
+	public class Directory : cmk.IO.Item
+	{
+		public Directory ( string PATH )
+		: base(PATH)
+		{
+		}
+
+		//...........................................................
+
+		public override string Path {
+			set {
+				base.Path = value;
+				m_name    = System.IO.Path.GetDirectoryName(m_path);
+			}
+		}
+
+		//...........................................................
+
+		public override bool Exists ()
+		{
+			return System.IO.Directory.Exists(m_path);
+		}
+
+		public override bool EnsureExists ()
+		{
+			if( Exists() ) return true;
+			if( m_path.IsNullOrEmpty() ) return false;
+
+			System.IO.Directory.CreateDirectory(m_path);
+
+			return Exists();
+		}
+
+		//...........................................................
+
+		public IEnumerable<string> Files ( string PATTERN = null )
+		{
+			return System.IO.Directory.EnumerateFiles(m_path, PATTERN);
+		}
+
+		public IEnumerable<string> Directories ( string PATTERN = null )
+		{
+			return System.IO.Directory.EnumerateDirectories(m_path, PATTERN);
+		}
+	}
+
+	//=========================================================================
+
+	public class File : cmk.IO.Item
 	{
 		protected string m_extension = "";  // if !Extension then assume is directory 
+		protected Stream m_raw;
 
 		//...........................................................
 
@@ -141,54 +191,6 @@ namespace NMS.IO
 			);
 
 			return Exists();
-		}
-	}
-
-	//=========================================================================
-
-	public class Directory : Item
-	{
-		public Directory ( string PATH )
-		:	base ( PATH )
-		{
-		}
-
-		//...........................................................
-
-		public override string Path {
-			set {
-				base.Path = value;
-				m_name    = System.IO.Path.GetDirectoryName(m_path);
-			}
-		}
-
-		//...........................................................
-
-		public override bool Exists ()
-		{
-			return System.IO.Directory.Exists(m_path);
-		}
-
-		public override bool EnsureExists ()
-		{
-			if( Exists() )               return true;
-			if( m_path.IsNullOrEmpty() ) return false;
-				
-			System.IO.Directory.CreateDirectory(m_path);
-
-			return Exists();
-		}
-
-		//...........................................................
-
-		public IEnumerable<string> Files ( string PATTERN = null )
-		{
-			return System.IO.Directory.EnumerateFiles(m_path, PATTERN);
-		}
-
-		public IEnumerable<string> Directories ( string PATTERN = null )
-		{
-			return System.IO.Directory.EnumerateDirectories(m_path, PATTERN);
 		}
 	}
 }

@@ -24,41 +24,18 @@ SOFTWARE.
 */
 //=============================================================================
 
-using System.IO;
-using System.Text;
-using System.Windows;
+
 
 //=============================================================================
 
-namespace NMS.PAK.JSON
+namespace cmk.NMS.PAK.JSON
 {
-	public class Data : NMS.PAK.Entry.Data
+	public partial class Differ : cmk.Controls.TextDiffer
 	{
-		protected string m_text;
-
-		//...........................................................
-
-		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		:	base ( INFO, RAW )
+		public Differ ( string LHS, string RHS )
+		:	base ( LHS, RHS )
 		{
-			if( Raw == null ) return;
-
-			var reader = new StreamReader(Raw, Encoding.UTF8);
-			m_text     = reader.ReadToEnd();
-
-			if( m_text == null ) m_text = "";
-		}
-
-		//...........................................................
-
-		public override UIElement ViewerControl {
-			get { return new Viewer { Text = Text }; }
-		}
-
-		//...........................................................
-
-		public string Text {
-			get { return m_text; }
+			ConstructViewers<Viewer>();
 		}
 	}
 }

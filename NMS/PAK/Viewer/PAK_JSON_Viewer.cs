@@ -28,9 +28,9 @@ using avalon = ICSharpCode.AvalonEdit;
 
 //=============================================================================
 
-namespace NMS.PAK.JSON
+namespace cmk.NMS.PAK.JSON
 {
-	public partial class Viewer : TextEditor
+	public partial class Viewer : cmk.Controls.TextViewer
 	{
 		protected static avalon.Highlighting.IHighlightingDefinition s_highlighter =
 			avalon.Highlighting.HighlightingManager.Instance.GetDefinitionByExtension(".json")

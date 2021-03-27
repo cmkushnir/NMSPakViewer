@@ -26,21 +26,12 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using System.Windows;
 
 //=============================================================================
-
-namespace NMS
+namespace cmk
 {
 	public static class IList_x
 	{
-		public static bool IsNullOrEmpty (
-			this string STRING
-		)
-		{
-			return string.IsNullOrEmpty(STRING);
-		}
-
 		public static bool IsNullOrEmpty<OBJECT_T> (
 			this IList<OBJECT_T> LIST
 		)
@@ -48,9 +39,11 @@ namespace NMS
 			return LIST == null || LIST.Count < 1;
 		}
 
+		//.................................................
+
 		public static int BinarySearchInsertIndex<OBJECT_T, KEY_T> (
-			this IList<OBJECT_T>       LIST,
-			KEY_T                      KEY,
+			this IList<OBJECT_T> LIST,
+			KEY_T KEY,
 			Func<OBJECT_T, KEY_T, int> COMPARE
 		)
 		{
@@ -64,15 +57,17 @@ namespace NMS
 				int c = COMPARE(LIST[mid], KEY);
 				if( c == 0 ) return mid;
 				if( c <  0 ) min = mid + 1;
-				else         max = mid - 1;
+				else max = mid - 1;
 			}
 
 			return min >= 0 ? min : max;
 		}
 
+		//.................................................
+
 		public static int BinarySearchIndex<OBJECT_T, KEY_T> (
-			this IList<OBJECT_T>       LIST,
-			KEY_T                      KEY,
+			this IList<OBJECT_T> LIST,
+			KEY_T KEY,
 			Func<OBJECT_T, KEY_T, int> COMPARE
 		)
 		{
@@ -92,15 +87,29 @@ namespace NMS
 			return -1;
 		}
 
+		//.................................................
+
 		public static OBJECT_T BinarySearchObject<OBJECT_T, KEY_T> (
-			this IList<OBJECT_T>       LIST,
-			KEY_T                      KEY,
+			this IList<OBJECT_T> LIST,
+			KEY_T KEY,
 			Func<OBJECT_T, KEY_T, int> COMPARE,
-			OBJECT_T                   DEFAULT = default
+			OBJECT_T DEFAULT = default
 		)
 		{
 			var    index = BinarySearchIndex(LIST, KEY, COMPARE);
 			return index < 0 ? DEFAULT : LIST[index];
+		}
+	}
+
+	//=========================================================================
+
+	public static class String_x
+	{
+		public static bool IsNullOrEmpty (
+			this string STRING
+		)
+		{
+			return string.IsNullOrEmpty(STRING);
 		}
 	}
 }

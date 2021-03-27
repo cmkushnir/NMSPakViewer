@@ -24,41 +24,22 @@ SOFTWARE.
 */
 //=============================================================================
 
-using System.IO;
-using System.Text;
-using System.Windows;
+using avalon = ICSharpCode.AvalonEdit;
 
 //=============================================================================
 
-namespace NMS.PAK.CSV
+namespace cmk.NMS.PAK.LUA
 {
-	public class Data : NMS.PAK.Entry.Data
+	public partial class Viewer : cmk.Controls.TextViewer
 	{
-		protected string m_text;
+		protected static avalon.Highlighting.IHighlightingDefinition s_highlighter =
+			avalon.Highlighting.HighlightingManager.Instance.GetDefinitionByExtension(".lua")
+		;
 
-		//...........................................................
-
-		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		:	base ( INFO, RAW )
+		public Viewer ()
+		:	base ()
 		{
-			if( Raw == null ) return;
-
-			var reader = new StreamReader(Raw, Encoding.UTF8);
-			m_text     = reader.ReadToEnd();
-
-			if( m_text == null ) m_text = "";
-		}
-
-		//...........................................................
-
-		public override UIElement ViewerControl {
-			get { return new Viewer { Text = Text }; }
-		}
-
-		//...........................................................
-
-		public string Text {
-			get { return m_text; }
+			SyntaxHighlighting = s_highlighter;
 		}
 	}
 }

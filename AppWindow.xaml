@@ -1,10 +1,10 @@
 ﻿<Window
-	x:Class="NMS.AppWindow"
+	x:Class="cmk.NMS.PakViewer.AppWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local_controls="clr-namespace:NMS.Controls"
+    xmlns:local="clr-namespace:cmk.Controls"
     mc:Ignorable="d"
 	Title="NMS : PAK Viewer" Icon="Logo.ico"
 	WindowStartupLocation="CenterScreen"
@@ -19,10 +19,10 @@
 				</ResourceDictionary>
 			</DockPanel.Resources>
 			<ComboBox Name="PakCombobox" IsEditable="False" IsReadOnly="True" Padding="4,0" ToolTip="Select .pak file, or none to browse all game .pak entries" />
-			<local_controls:Breadcrumb x:Name="EntryBreadcrumb"                             ToolTip="Select entry" />
-			<Button x:Name="Copy"  Content="Copy"  Margin="4,0"                             ToolTip="Copy path to clipboard" />
-			<Button x:Name="Save"  Content="Save"  Margin="4,0" IsEnabled="False"           ToolTip="Save entry to disk"/>
-			<Button x:Name="About" Content="About" Margin="4,0" HorizontalAlignment="Right" ToolTip="Open GitHub project page" />
+			<local:Breadcrumb x:Name="EntryBreadcrumb" />
+			<Button x:Name="Copy"   Content="Copy"   Margin="4,0" ToolTip="Copy path to clipboard" />
+			<Button x:Name="Save"   Content="Save"   Margin="4,0" IsEnabled="False" />
+			<Button x:Name="GitHub" Content="GitHub" Margin="4,0" HorizontalAlignment="Right" ToolTip="https://github.com/cmkushnir/NMSPakViewer" />
 		</DockPanel>
 		<Grid x:Name="Viewer"
 			Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"

@@ -1,16 +1,18 @@
 ﻿<Window
-	x:Class="NMS.Controls.SelectFolderDialog"
+	x:Class="cmk.Controls.SelectFolderDialog"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	Title="Select Directory" Height="1000" Width="400" Icon="/NMSPakViewer;component/Logo.ico" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Topmost="True"
+	Title="Select Directory" Icon="/NMSPakViewer;component/Logo.ico"
+	WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
+	Height="1000" Width="400" 
 >
 	<Grid>
-		<Button x:Name="OK"          Content="Select Folder" HorizontalAlignment="Right" Margin="0,0,115,10" VerticalAlignment="Bottom" Width="100"/>
-		<Button x:Name="Cancel"      Content="Cancel"        HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="100"/>
-		<Label  x:Name="Description" Content=" " Margin="10,10,10,0" VerticalAlignment="Top" />
-		<TreeView x:Name="Tree" Margin="10,41,10,35"/>
+		<Button   x:Name="OK"          Content="Select Folder" HorizontalAlignment="Right" Margin="0,0,115,10" VerticalAlignment="Bottom" Width="100" />
+		<Button   x:Name="Cancel"      Content="Cancel"        HorizontalAlignment="Right" Margin="0,0,10,10"  VerticalAlignment="Bottom" Width="100" />
+		<Label    x:Name="Description" Content=" " Margin="10,10,10,0" VerticalAlignment="Top" />
+		<TreeView x:Name="Tree" Margin="10,41,10,35" />
 	</Grid>
 </Window>

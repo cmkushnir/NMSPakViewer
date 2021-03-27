@@ -32,11 +32,11 @@ using System.Windows.Controls;
 
 //=============================================================================
 
-namespace NMS.Controls
+namespace cmk.Controls
 {
-	public partial class SelectFolderDialog : Window
+	public partial class SelectFolderDialog : System.Windows.Window
 	{
-		protected DirectoryInfo m_directory_info;
+		protected System.IO.DirectoryInfo m_directory_info;
 
 		//...........................................................
 
@@ -122,7 +122,7 @@ namespace NMS.Controls
 		protected void OnOK ( object SENDER, RoutedEventArgs ARGS )
 		{
 			var item = Tree.SelectedItem as TreeViewItem;
-			var info = item?.Tag as DirectoryInfo;
+			var info = item?.Tag         as DirectoryInfo;
 			if( info == null ) DialogResult = false;
 			else {
 				m_directory_info = info;

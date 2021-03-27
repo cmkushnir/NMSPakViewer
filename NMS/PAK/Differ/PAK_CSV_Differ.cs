@@ -28,13 +28,14 @@ SOFTWARE.
 
 //=============================================================================
 
-namespace NMS.PAK.TXT
+namespace cmk.NMS.PAK.CSV
 {
-	public partial class Viewer : TextEditor
+	public partial class Differ : cmk.Controls.TextDiffer
 	{
-		public Viewer ()
-		:	base ()
+		public Differ ( string LHS, string RHS )
+		:	base ( LHS, RHS )
 		{
+			ConstructViewers<Viewer>();
 		}
 	}
 }

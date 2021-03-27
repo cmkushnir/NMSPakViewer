@@ -25,30 +25,38 @@ SOFTWARE.
 //=============================================================================
 
 using System.IO;
+using System.Text;
 using System.Windows;
 
 //=============================================================================
 
-namespace NMS.PAK.SPV
+namespace cmk.NMS.PAK.TXT
 {
-	public class Data : NMS.PAK.Entry.Data
+	public class Data : cmk.NMS.PAK.Item.Data
 	{
 		protected string m_text;
 
 		//...........................................................
 
-		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
+		public Data ( cmk.NMS.PAK.Item.Info INFO, Stream RAW )
 		:	base ( INFO, RAW )
 		{
-			// todo: get a c# wrapper around something like spirv-cross.exe
-			// m_text = convert Raw to decompiled spv
+			if( Raw == null ) return;
+
+			var reader = new StreamReader(Raw, Encoding.UTF8);
+			m_text     = reader.ReadToEnd();
+
 			if( m_text == null ) m_text = "";
 		}
 
 		//...........................................................
 
-		public override UIElement ViewerControl {
-			get { return new Viewer { Text = Text }; }
+		protected override UIElement ViewerControl_ {
+			get {
+				var game_data  = GameData as Data;
+				if( game_data != null ) return new Differ(game_data.Text, Text);
+				else                    return new Viewer{Text = Text};
+			}
 		}
 
 		//...........................................................

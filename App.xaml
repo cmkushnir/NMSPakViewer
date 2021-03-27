@@ -1,5 +1,5 @@
 ﻿<Application
-	x:Class="NMS.App"
+	x:Class="cmk.NMS.PakViewer.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     StartupUri="AppWindow.xaml"

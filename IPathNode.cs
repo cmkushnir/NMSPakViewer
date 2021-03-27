@@ -30,7 +30,7 @@ using System.Linq;
 
 //=============================================================================
 
-namespace NMS
+namespace cmk
 {
 	public interface IPathNode : IComparable<IPathNode>, IComparable<string>
 	{

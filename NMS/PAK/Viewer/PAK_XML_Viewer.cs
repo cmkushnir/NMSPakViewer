@@ -24,55 +24,18 @@ SOFTWARE.
 */
 //=============================================================================
 
-using System.IO;
-using System.Windows;
-using libMBIN;
+using avalon = ICSharpCode.AvalonEdit;
 
 //=============================================================================
 
-namespace NMS.PAK.MBIN
+namespace cmk.NMS.PAK.XML
 {
-	public class Data : NMS.PAK.Entry.Data
+	public partial class Viewer : cmk.Controls.XmlViewer
 	{
-		protected MBINFile m_dom;
-		protected string   m_exml;
-
-		//...........................................................
-
-		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
-		:	base ( INFO, RAW )
+		public Viewer ()
+		:	base ()
 		{
 		}
-
-		//...........................................................
-
-		public override UIElement ViewerControl {
-			get { return new Viewer { Text = EXML }; }
-		}
-
-		//...........................................................
-
-		public MBINFile DOM {
-			get {
-				if( m_dom == null ) {
-					var dom = new MBINFile(Raw, true);
-					if( dom.Load() && dom.Header.IsValid ) {
-						m_dom = dom;
-					}
-				}
-				return m_dom;
-			}
-		}
-
-		public string EXML {
-			get {
-				if( m_exml == null && DOM != null ) {
-					m_exml  = EXmlFile.WriteTemplate(DOM.GetData());
-				}
-				return m_exml; 
-			}
-		}
-
 	}
 }
 

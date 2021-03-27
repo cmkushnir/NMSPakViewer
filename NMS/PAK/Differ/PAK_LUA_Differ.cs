@@ -24,22 +24,18 @@ SOFTWARE.
 */
 //=============================================================================
 
-using avalon = ICSharpCode.AvalonEdit;
+
 
 //=============================================================================
 
-namespace NMS.PAK.LUA
+namespace cmk.NMS.PAK.LUA
 {
-	public partial class Viewer : TextEditor
+	public partial class Differ : cmk.Controls.TextDiffer
 	{
-		protected static avalon.Highlighting.IHighlightingDefinition s_highlighter =
-			avalon.Highlighting.HighlightingManager.Instance.GetDefinitionByExtension(".lua")
-		;
-
-		public Viewer ()
-		:	base ()
+		public Differ ( string LHS, string RHS )
+		:	base ( LHS, RHS )
 		{
-			SyntaxHighlighting = s_highlighter;
+			ConstructViewers<Viewer>();
 		}
 	}
 }

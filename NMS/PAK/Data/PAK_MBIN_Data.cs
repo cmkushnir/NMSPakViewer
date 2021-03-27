@@ -26,36 +26,57 @@ SOFTWARE.
 
 using System.IO;
 using System.Windows;
+using libMBIN;
 
 //=============================================================================
 
-namespace NMS.PAK.DDS
+namespace cmk.NMS.PAK.MBIN
 {
-	public class Data : NMS.PAK.Entry.Data
+	public class Data : cmk.NMS.PAK.Item.Data
 	{
-		protected Pfim.IImage m_image;
+		protected MBINFile m_mbin;
+		protected string   m_exml;
 
 		//...........................................................
 
-		public Data ( NMS.PAK.Entry.Info INFO, Stream RAW )
+		public Data ( cmk.NMS.PAK.Item.Info INFO, Stream RAW )
 		:	base ( INFO, RAW )
 		{
-			if( Raw == null ) return;
-			var config = new Pfim.PfimConfig();
-			m_image    = Pfim.Pfim.FromStream(Raw, config);
 		}
 
 		//...........................................................
 
-		public override UIElement ViewerControl {
-			get { return new Viewer { ViewerData = this }; }
+		protected override UIElement ViewerControl_ {
+			get {
+				var game_data  = GameData as Data;
+				if( game_data != null ) return new Differ(game_data.EXML, EXML);
+				else                    return new Viewer{Text = EXML};
+			}
 		}
 
 		//...........................................................
 
-		public Pfim.IImage Image {
-			get { return m_image; }
+		public MBINFile MBIN {
+			get {
+				if( m_mbin == null ) {
+					var mbin = new MBINFile(Raw, true);
+					if( mbin.Load() && mbin.Header.IsValid ) {
+						m_mbin = mbin;
+					}
+				}
+				return m_mbin;
+			}
 		}
+
+		public string EXML {
+			get {
+				if( m_exml == null && MBIN != null ) {
+					m_exml  = EXmlFile.WriteTemplate(MBIN.GetData());
+				}
+				return m_exml; 
+			}
+		}
+
 	}
 }
 
