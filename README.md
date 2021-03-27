@@ -35,7 +35,7 @@ The following types are only present in .pak specific entry trees, they are excl
 - .SPV - There are ~46K in one folder alone, no useful info to view.
 - .WEM - Many, need wwise code to convery from .wem to other playable audio format.
 
-Suported:
+Supported:
 - .TXT, .CSV, .JSON, .XML, .LUA - Extracted data is passed as-is to Avalon Editor.
 - .DDS - Pfim is used to convert entries to bitmaps for display.  The bitmaps are stretched to the window size.  Pfim does not support all .dds types.
 - .MBIN - libMBIN is used to load the entry data and convert it to .exml format.
