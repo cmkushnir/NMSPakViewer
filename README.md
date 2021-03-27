@@ -5,8 +5,8 @@ In-memory viewer.
 
 On startup:
 - Loads the paths of all game and mod .pak files.
-- For each .pak file extract the manifest and build an in-memory entry tree.
-- Merge all game .pak entry trees.
+- For each .pak file extract the manifest and build an in-memory item tree.
+- Merge all game .pak item trees.
 
 For Steam versions of the game the app should find the game folder automatically.
 For other cases the user is prompted to select the game folder.
@@ -15,13 +15,17 @@ HKEY_CURRENT_USER\SOFTWARE\HelloGames\NoMansSky\InstallDir</br>
 If InstallDir is invalid the app will re-find|prompt to select the game folder on next start.
 
 Toolbar:
-- Combobox lists all mod and game .pak files. Select a specific .pak file to have the breadcrumb control use its entry tree, or none to use the merged entry tree.
-- Breadcrumb control to select a specific entry in the current entry tree.
-When an entry is selected its contents are extracted (in-memory) from its parent .pak file, converted as needed, and the appropriate viewer control used to display the data.
+- Combobox lists all mod and game .pak files. Select a specific .pak file to have the breadcrumb control use its item tree, or none to use the merged item tree.
+- Breadcrumb control to select a specific item in the current item tree.
+When an item is selected its contents are extracted (in-memory) from its parent .pak file, converted as needed, and the appropriate viewer control used to display the data.
 - Copy button copies the current path to the clipboard e.g. for pasting into an AMUMSS .lua script.</br>
-- Save button will open the Save File dialog to save the entry to disk; the path is not saved.</br>
-MBIN entries can be saved as either .mbin or .exml files (use the Save as Type combobox in the Save File dialog).
-- About button opens the default browser to the GitHub project page.
+- Save button will open the Save File dialog to save the item to disk; the path is not saved.</br>
+MBIN items can be saved as either .mbin or .exml files (use the Save as Type combobox in the Save File dialog).
+- GitHub button opens the default browser to the GitHub project page.
+
+Folding support is available for items that can be viewed as xml data.
+If a mod .pak file is selected then any items that replace a game item will be shown in a diff viewer, if one is available for the item type.
+Folding is disabled when viewing an xml diff, as there is no easy way to sync foldings between viewers.
 
 <h2>.PAK Entry Types:</h2>
 
@@ -53,7 +57,7 @@ libMBIN decompiles .mbin entries and optionally save as .exml files.
 https://github.com/nickbabcock/Pfim</br>
 Pfim converts (most) .dds entries to bitmaps for viewing.
 
+https://github.com/mmanela/diffplex</br>
+DiffPlex calculates diffferences between entries with text viewers e.g. mbin, xml.
+
 Download the latest versions as needed.  In particular, download the latest libMBIN whenever it's been updated to support a new version of the game.
-
-
-
