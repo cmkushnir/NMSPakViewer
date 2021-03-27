@@ -1,4 +1,7 @@
 ﻿[*.cs]
+indent_style = tab
+indent_size = 4
+trim_trailing_whitespace = true
 
 # IDE0008: Use explicit type
 dotnet_diagnostic.IDE0008.severity = silent
