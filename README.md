@@ -9,9 +9,8 @@ On startup:
 - Merge all game .pak item trees.
 
 The app should find the Steam version game folder automatically.
-For other cases the user is prompted to select the game folder.
-The found|selected game folder is saved to|loaded from:</br>
-HKEY_CURRENT_USER\SOFTWARE\HelloGames\NoMansSky\InstallDir</br>
+For other cases the user is prompted to select the game folder.</br>
+The found|selected game folder is saved to|loaded from: HKEY_CURRENT_USER\SOFTWARE\HelloGames\NoMansSky\InstallDir</br>
 If InstallDir is invalid the app will re-find|prompt to select the game folder on next start.
 
 Toolbar:
