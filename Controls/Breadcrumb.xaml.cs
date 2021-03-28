@@ -24,6 +24,7 @@ SOFTWARE.
 */
 //=============================================================================
 
+using System.Windows;
 using System.Windows.Controls;
 
 //=============================================================================
@@ -149,7 +150,14 @@ namespace cmk.Controls
 				MaxDropDownHeight = Root.MaxDropDownHeight,
 				Padding           = new System.Windows.Thickness(4, 0, 4, 0)
 			};
+
+			// make combobox w/ many items quick like bunny, not slow like tortoise.
+			next.ItemsPanel = new ItemsPanelTemplate {
+				VisualTree  = new FrameworkElementFactory(typeof(VirtualizingStackPanel))
+			};
+
 			next.SelectionChanged += Combobox_SelectionChanged;
+
 			Panel.Children.Add(next);
 		}
 	}

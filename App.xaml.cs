@@ -238,14 +238,11 @@ namespace cmk.NMS.PakViewer
 
 				foreach( var pak in App.Current.GamePakFiles ) {
 					var entries  = pak.EntryList;
-					if( entries != null )
-						for( int entry = 1; entry < entries.Count; ++entry ) {
-							if( entries[entry].Path.EndsWith(".BIN")
-							||  entries[entry].Path.EndsWith(".SPV")  // ~46K
-							||  entries[entry].Path.EndsWith(".WEM")  // ~manyK
-							)	continue;
-							root.Insert(entries[entry].Path, entries[entry]);  // add tree node
-						}
+					if( entries == null ) continue;
+
+					for( int entry = 1; entry < entries.Count; ++entry ) {
+						root.Insert(entries[entry].Path, entries[entry]);  // add tree node
+					}
 				}
 
 				PakTree = root;

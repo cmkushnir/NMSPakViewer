@@ -8,6 +8,12 @@
 	VerticalAlignment="Center"
 >
 	<WrapPanel Name="Panel">
-		<ComboBox Name="Root" />
+		<ComboBox Name="Root">
+			<ComboBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ComboBox.ItemsPanel>
+		</ComboBox>
 	</WrapPanel>
 </UserControl>

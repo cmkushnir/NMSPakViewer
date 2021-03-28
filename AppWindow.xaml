@@ -19,7 +19,7 @@
 				</ResourceDictionary>
 			</DockPanel.Resources>
 			<ComboBox Name="PakCombobox" IsEditable="False" IsReadOnly="True" Padding="4,0" ToolTip="Select .pak file, or none to browse all game .pak entries" />
-			<local:Breadcrumb x:Name="EntryBreadcrumb" />
+			<local:Breadcrumb x:Name="ItemBreadcrumb" />
 			<Button x:Name="Copy"   Content="Copy"   Margin="4,0" ToolTip="Copy path to clipboard" />
 			<Button x:Name="Save"   Content="Save"   Margin="4,0" IsEnabled="False" />
 			<Button x:Name="GitHub" Content="GitHub" Margin="4,0" HorizontalAlignment="Right" ToolTip="https://github.com/cmkushnir/NMSPakViewer" />

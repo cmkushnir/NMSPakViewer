@@ -47,15 +47,15 @@ namespace cmk.NMS.PakViewer
 			LayoutUpdated += AppWindow_LayoutUpdated;
 
 			PakCombobox.ItemsSource       = App.Current.PakFiles;  // load mod and game .pak files
-			PakCombobox.SelectionChanged += PakCombobox_SelectionChanged;
+			PakCombobox.SelectionChanged += OnPakComboboxSelectionChanged;
 
-			EntryBreadcrumb.SelectionChanged += EntryBreadcrumb_SelectionChanged;
+			ItemBreadcrumb.SelectionChanged += OnItemBreadcrumbSelectionChanged;
 
-			Copy.Click   += Copy_Click;
-			Save.Click   += Save_Click;
-			GitHub.Click += GitHub_Click;
+			Copy.Click   += OnCopyClick;
+			Save.Click   += OnSaveClick;
+			GitHub.Click += OnGitHubClick;
 
-			App.Current.PakTreeBuilt += Current_PakTreeBuilt;
+			App.Current.PakTreeBuilt += OnPakTreeBuilt;
 			var task = App.Current.BuildPakTree();
 		}
 
@@ -64,28 +64,28 @@ namespace cmk.NMS.PakViewer
 		protected void AppWindow_LayoutUpdated ( object SENDER, System.EventArgs ARGS )
 		{
 			PakCombobox    .MaxDropDownHeight = Viewer.ActualHeight - 4;
-			EntryBreadcrumb.MaxDropDownHeight = Viewer.ActualHeight - 4;
+			ItemBreadcrumb.MaxDropDownHeight = Viewer.ActualHeight - 4;
 		}
 
 		//...........................................................
 
-		protected void Current_PakTreeBuilt ( object SENDER, PAK.Item.Node ROOT )
+		protected void OnPakTreeBuilt ( object SENDER, PAK.Item.Node ROOT )
 		{
-			App.Current.PakTreeBuilt -= Current_PakTreeBuilt;
+			App.Current.PakTreeBuilt -= OnPakTreeBuilt;
 
-			// if EntryBreadcrumb.ItemsSource != null then user already picked a specific mod to view
-			if( EntryBreadcrumb.ItemsSource == null )
+			// if ItemBreadcrumb.ItemsSource != null then user already picked a specific mod to view
+			if( ItemBreadcrumb.ItemsSource == null )
 			App.Current.Dispatcher.Invoke(() => {
-				EntryBreadcrumb.ItemsSource = App.Current.PakTree;  // = ROOT
+				ItemBreadcrumb.ItemsSource = App.Current.PakTree;  // = ROOT
 			});
 		}
 
 		//...........................................................
 
-		protected void PakCombobox_SelectionChanged ( object SENDER, SelectionChangedEventArgs ARGS )
+		protected void OnPakComboboxSelectionChanged ( object SENDER, SelectionChangedEventArgs ARGS )
 		{
 			var file = ARGS.AddedItems.Count < 1 ? null : ARGS.AddedItems[0] as PAK.File;
-			EntryBreadcrumb.ItemsSource =
+			ItemBreadcrumb.ItemsSource =
 				string.IsNullOrEmpty(file?.Name) ?
 				App.Current.PakTree :  // null until fully built
 				file.EntryTree
@@ -94,13 +94,15 @@ namespace cmk.NMS.PakViewer
 
 		//...........................................................
 
-		protected void EntryBreadcrumb_SelectionChanged ( object SENDER, cmk.IPathNode SELECTED )
+		protected void OnItemBreadcrumbSelectionChanged ( object SENDER, cmk.IPathNode SELECTED )
 		{
 			Viewer.Children.Clear();
 
 			var info   = SELECTED?.Tag as PAK.Item.Info;
 			var data   = PAK.Item.Data.New(info);
 			var viewer = data?.ViewerControl;
+
+			ItemBreadcrumb.ToolTip = info?.File?.Name;
 
 			Save.IsEnabled = data?.Raw != null;
 
@@ -109,17 +111,17 @@ namespace cmk.NMS.PakViewer
 
 		//...........................................................
 
-		protected void Copy_Click ( object SENDER, RoutedEventArgs ARGS )
+		protected void OnCopyClick ( object SENDER, RoutedEventArgs ARGS )
 		{
-			var path = EntryBreadcrumb.Selected?.Path;
+			var path = ItemBreadcrumb.Selected?.Path;
 			Clipboard.SetText(path ?? "");
 		}
 
 		//...........................................................
 
-		protected void Save_Click ( object SENDER, RoutedEventArgs ARGS )
+		protected void OnSaveClick ( object SENDER, RoutedEventArgs ARGS )
 		{
-			var info  = EntryBreadcrumb.Selected?.Tag as PAK.Item.Info;
+			var info  = ItemBreadcrumb.Selected?.Tag as PAK.Item.Info;
 			if( info == null ) return;
 
 			var dialog = new SaveFileDialog {
@@ -128,7 +130,6 @@ namespace cmk.NMS.PakViewer
 					info.Extension.TrimStart('.'),
 					info.Extension
 				),
-				FilterIndex = 0
 			};
 			if( info.Extension ==  ".MBIN" ||
 				info.Path.EndsWith(".MBIN.PC")
@@ -136,7 +137,7 @@ namespace cmk.NMS.PakViewer
 
 			if( dialog.ShowDialog() == false ) return;
 
-			if( dialog.FilterIndex > 0 ) {  // hack, .EXML
+			if( dialog.FileName.EndsWith(".EXML") ) {
 				var mbin  = PAK.Item.Data.New(info) as PAK.MBIN.Data;
 				if( mbin != null ) File.WriteAllText(dialog.FileName, mbin.EXML);
 			}
@@ -147,7 +148,7 @@ namespace cmk.NMS.PakViewer
 
 		//...........................................................
 
-		protected void GitHub_Click ( object SENDER, RoutedEventArgs ARGS )
+		protected void OnGitHubClick ( object SENDER, RoutedEventArgs ARGS )
 		{
 			Process.Start(new ProcessStartInfo(@"https://github.com/cmkushnir/NMSPakViewer"));
 			ARGS.Handled = true;
