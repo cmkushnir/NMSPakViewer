@@ -8,7 +8,7 @@ On startup:
 - For each .pak file extract the manifest and build an in-memory item tree.
 - Merge all game .pak item trees.
 
-For Steam versions of the game the app should find the game folder automatically.
+The app should find the Steam version game folder automatically.
 For other cases the user is prompted to select the game folder.
 The found|selected game folder is saved to|loaded from:</br>
 HKEY_CURRENT_USER\SOFTWARE\HelloGames\NoMansSky\InstallDir</br>
