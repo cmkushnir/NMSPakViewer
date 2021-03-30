@@ -1,7 +1,7 @@
 # NMSPakViewer
 No Man's Sky .pak file viewer.
 
-In-memory viewer.
+View game and mod .pak file contents, without having to extract them to disk.
 
 On startup:
 - Loads the paths of all game and mod .pak files.
